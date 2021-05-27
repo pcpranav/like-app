@@ -1,6 +1,7 @@
 import React, { useState ,useEffect,useContext} from "react";
 import TinderCard from "react-tinder-card";
 import { GlobalContext } from "../context/GlobalState";
+import { useHistory }from "react-router-dom"
 const data = [
   {
     url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/2_lgkxfr.png",
@@ -28,7 +29,7 @@ const alreadyRemoved = [];
 // let imgState = data;
 
 const Home = () => {
-
+const history = useHistory()
 const context = useContext(GlobalContext)
 console.log(context);
 
@@ -37,14 +38,14 @@ console.log(context);
   const [lastDirection, setLastDirection] = useState();
 
 
-  useEffect(() => {
-    localStorage.setItem("data",JSON.stringify(value));
-    console.log(value)
-}, [value])
+//   useEffect(() => {
+//     localStorage.setItem("data",JSON.stringify(value));
+//     console.log(value)
+// }, [value])
 
-useEffect(() => {
-  outOfFrame()
-}, [])
+// useEffect(() => {
+//   outOfFrame()
+// }, [])
 
 let val = JSON.parse(localStorage.getItem("data"))
 
@@ -73,11 +74,18 @@ let val = JSON.parse(localStorage.getItem("data"))
       outOfFrame(toBeRemoved,dir)
     }
   };
+  const submitHandler=(e)=>{
+    e.preventDefault();
+    context.logout();
+    localStorage.removeItem("user");
+    localStorage.removeItem("data");
+    history.push("/login")
+  }
   return (
     <div className="home">
       <div className="nav">
         <h1>Welcome,Pranav</h1>
-        <button>Logout</button>
+        <button onClick={submitHandler}>Logout</button>
       </div>
       <div className="card_main">
         {img?(img.map((img) => (

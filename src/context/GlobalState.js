@@ -15,10 +15,9 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // Actions
-  function login(username) {
+  function login() {
     dispatch({
       type: 'LOGIN',
-      payload: username
     });
   }
 
@@ -28,11 +27,19 @@ export const GlobalProvider = ({ children }) => {
     });
   }
 
+  function naming(username) {
+    dispatch({
+      type: 'NAME',
+      payload:username
+    });
+  }
+
   return (<GlobalContext.Provider value={{
     auth: state.auth,
     username:state.username,
     login,
-    logout
+    logout,
+    naming
   }}>
     {children}
   </GlobalContext.Provider>);

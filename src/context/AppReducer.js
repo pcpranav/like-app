@@ -4,13 +4,16 @@ export const reducer=(state, action) => {
         return {
           ...state,
           auth:true,
-          username:action.payload
         }
       case 'LOGOUT':
         return {
           ...state,
           auth:false,
-          username:""
+        }
+        case 'NAME':
+        return {
+          ...state,
+          username:action.payload
         }
       default:
         return state;
