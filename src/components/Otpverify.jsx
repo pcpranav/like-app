@@ -35,18 +35,25 @@ const Otpverify = ({ prevStep }) => {
     }
   };
   const goBack = (e) => {
-    e.preventDefault();
     prevStep();
     localStorage.clear();
+  };
+  const clear = (e) => {
+    setState({
+      num1: "",
+      num2: "",
+      num3: "",
+      num4: "",
+    });
   };
   return (
     <div>
       {val && (
         <Alert
           variant="danger"
-          style={{ position: "absolute", top: 0, right: "40%" }}
+          style={{ position: "absolute", top: "0", right: "0" }}
         >
-          Wrong OTP
+          Invalid OTP.Please enter the OTP again.
         </Alert>
       )}
 
@@ -92,7 +99,10 @@ const Otpverify = ({ prevStep }) => {
               <button onClick={onSubmit}>Submit</button>
             </div>
             <div className="input-button">
-              <button onClick={goBack}>Go Back</button>
+              <button onClick={goBack}>resend otp</button>
+            </div>
+            <div className="input-button">
+              <button onClick={clear}>clear fields</button>
             </div>
           </div>
         </div>

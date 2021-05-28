@@ -9,7 +9,6 @@ const alreadyRemoved = [];
 
 const Home = () => {
   const context = useContext(GlobalContext);
-  console.log(context.data);
   //setting up state such that state persists even on refresh
 
   let localvalue = JSON.parse(localStorage.getItem("data")) || context.data;
@@ -69,7 +68,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="nav">
-        <h1>Welcome,{user.username}</h1>
+        <h1>Welcome,{user?user.username:""}</h1>
         <button onClick={submitHandler}>Logout</button>
       </div>
       <div>
