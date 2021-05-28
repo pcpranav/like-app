@@ -1,15 +1,19 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Alert } from "react-bootstrap";
 import { GlobalContext } from "../context/GlobalState";
 
 const PhoneInput = ({ nextStep }) => {
   const [state, setState] = useState({ username: "", phone: "" });
   const [val, setVal] = useState(false);
+
   const handleChange = (input) => (e) => {
     setState({ ...state, [input]: e.target.value });
   };
+
   const { phone, username } = state;
-  const {naming} = useContext(GlobalContext);
+
+  const { naming } = useContext(GlobalContext);
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -20,10 +24,11 @@ const PhoneInput = ({ nextStep }) => {
     )
       setVal(true);
     else {
-      naming(username)
+      naming(username);
       nextStep();
     }
   };
+
   return (
     <div>
       {val && (

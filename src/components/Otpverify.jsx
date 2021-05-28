@@ -1,16 +1,18 @@
-import React, { useState, useContext ,useEffect} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { GlobalContext } from "../context/GlobalState";
-import{ useHistory }from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Otpverify = ({ prevStep }) => {
-  const history=useHistory();
-  const {login,auth,username} = useContext(GlobalContext);
+  const history = useHistory();
+  const { login, auth, username } = useContext(GlobalContext);
   useEffect(() => {
-    localStorage.setItem("user",JSON.stringify({auth:auth,username:username}))
-    if(auth===true)
-    history.push("/home")
-  }, [auth,history,username])
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ auth: auth, username: username })
+    );
+    if (auth === true) history.push("/home");
+  }, [auth, history, username]);
   const [state, setState] = useState({
     num1: "",
     num2: "",
@@ -23,7 +25,7 @@ const Otpverify = ({ prevStep }) => {
   };
   const { num1, num2, num3, num4 } = state;
   const otp = num1 + num2 + num3 + num4;
-  
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (otp === "0000") {
@@ -35,6 +37,7 @@ const Otpverify = ({ prevStep }) => {
   const goBack = (e) => {
     e.preventDefault();
     prevStep();
+    localStorage.clear();
   };
   return (
     <div>

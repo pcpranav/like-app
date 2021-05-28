@@ -1,11 +1,33 @@
-import React, { createContext, useReducer } from 'react';
-import {reducer} from './AppReducer';
+import React, { createContext, useReducer } from "react";
+import { reducer } from "./AppReducer";
 
 // Initial state
 const initialState = {
-  auth:false,
-  username:""
-}
+  auth: false,
+  username: "",
+  data: [
+    {
+      url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/5_varpfj.png",
+      name: "Five",
+    },
+    {
+      url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/4_uakrrm.png",
+      name: "Four",
+    },
+    {
+      url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/3_lsai5t.png",
+      name: "Three",
+    },
+    {
+      url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/1_w4lazg.png",
+      name: "Two",
+    },
+    {
+      url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/2_lgkxfr.png",
+      name: "One",
+    },
+  ],
+};
 
 // Create context
 export const GlobalContext = createContext(initialState);
@@ -17,30 +39,35 @@ export const GlobalProvider = ({ children }) => {
   // Actions
   function login() {
     dispatch({
-      type: 'LOGIN',
+      type: "LOGIN",
     });
   }
 
   function logout() {
     dispatch({
-      type: 'LOGOUT',
+      type: "LOGOUT",
     });
   }
 
   function naming(username) {
     dispatch({
-      type: 'NAME',
-      payload:username
+      type: "NAME",
+      payload: username,
     });
   }
 
-  return (<GlobalContext.Provider value={{
-    auth: state.auth,
-    username:state.username,
-    login,
-    logout,
-    naming
-  }}>
-    {children}
-  </GlobalContext.Provider>);
-}
+  return (
+    <GlobalContext.Provider
+      value={{
+        auth: state.auth,
+        username: state.username,
+        data: state.data,
+        login,
+        logout,
+        naming,
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
+};

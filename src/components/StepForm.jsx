@@ -4,7 +4,6 @@ import PhoneInput from './PhoneInput';
 
 const StepForm = () => {
 	
-
 	const [step, setStep] = useState(1)
 	
 	const nextStep = () => {

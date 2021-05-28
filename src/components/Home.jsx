@@ -1,125 +1,124 @@
-import React, { useState ,useEffect,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import TinderCard from "react-tinder-card";
 import { GlobalContext } from "../context/GlobalState";
-import { useHistory }from "react-router-dom"
-const data = [
-  {
-    url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/2_lgkxfr.png",
-    name: "One",
-  },
-  {
-    url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/1_w4lazg.png",
-    name: "Two",
-  },
-  {
-    url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/3_lsai5t.png",
-    name: "Three",
-  },
-  {
-    url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/4_uakrrm.png",
-    name: "Four",
-  },
-  {
-    url: "https://res.cloudinary.com/djclc3a7t/image/upload/v1622048270/5_varpfj.png",
-    name: "Five",
-  },
-];
+import { useHistory } from "react-router-dom";
+
+//stores the removed images,so as to use later when needed
 
 const alreadyRemoved = [];
-// let imgState = data;
 
 const Home = () => {
-const history = useHistory()
-const context = useContext(GlobalContext)
-console.log(context);
+  const context = useContext(GlobalContext);
+  console.log(context.data);
+  //setting up state such that state persists even on refresh
 
+  let localvalue = JSON.parse(localStorage.getItem("data")) || context.data;
+  let ld = JSON.parse(localStorage.getItem("direction"));
+  let nm = JSON.parse(localStorage.getItem("name"));
 
-  const [value, setValue] = useState(data);
-  const [lastDirection, setLastDirection] = useState();
+  let [local, setLocal] = useState(localvalue);
+  let [lastDirection, setLastDirection] = useState(ld);
+  let [name, setName] = useState(nm);
 
+  //multiple useffects to change state in order and reduce clutter
 
-//   useEffect(() => {
-//     localStorage.setItem("data",JSON.stringify(value));
-//     console.log(value)
-// }, [value])
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(local));
+  }, [local]);
 
-// useEffect(() => {
-//   outOfFrame()
-// }, [])
+  useEffect(() => {
+    localStorage.setItem("direction", JSON.stringify(lastDirection));
+  }, [lastDirection]);
 
-let val = JSON.parse(localStorage.getItem("data"))
+  useEffect(() => {
+    localStorage.setItem("name", JSON.stringify(name));
+  }, [name]);
 
-  // const [img, setImg] = useState(data);
-  const [img, setImg] = useState(val);
-  // const [lastDirection, setLastDirection] = useState();
-  const [name, setName] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const history = useHistory();
+
+  const [img, setImg] = useState(local);
 
   const outOfFrame = (name, direction) => {
     setName(name);
     setLastDirection(direction);
     alreadyRemoved.push(name);
-    // imgState = imgState.filter((img) => img.name !== name);
-    if(val)
-    val= val.filter((img) => img.name !== name);
-
-    setImg(val);
-    setValue(val)
+    if (local) {
+      local = local.filter((x) => x.name !== name);
+      setLocal(local);
+    }
+    setImg(local);
   };
+
   const swipe = (dir) => {
-    const cardsLeft = img.filter(
-      (img) => !alreadyRemoved.includes(img.name)
-    );
+    const cardsLeft = img.filter((img) => !alreadyRemoved.includes(img.name));
     if (cardsLeft.length) {
       const toBeRemoved = cardsLeft[cardsLeft.length - 1].name;
-      outOfFrame(toBeRemoved,dir)
+      outOfFrame(toBeRemoved, dir);
     }
   };
-  const submitHandler=(e)=>{
+
+  const submitHandler = (e) => {
     e.preventDefault();
     context.logout();
-    localStorage.removeItem("user");
-    localStorage.removeItem("data");
-    history.push("/login")
-  }
+    localStorage.clear();
+    history.push("/login");
+  };
+
   return (
     <div className="home">
       <div className="nav">
-        <h1>Welcome,Pranav</h1>
+        <h1>Welcome,{user.username}</h1>
         <button onClick={submitHandler}>Logout</button>
       </div>
-      <div className="card_main">
-        {img?(img.map((img) => (
-          <TinderCard
-            className="swipe"
-            preventSwipe={["up", "down"]}
-            key={img.name}
-            onCardLeftScreen={(dir) => outOfFrame(img.name, dir)}
-          >
-            <div
-              className="card"
-              style={{
-                backgroundImage: `url(${img.url})`,
-                backgroundRepeat: "no-repeat",
-              }}
-            >
-              <h3>{img.name}</h3>
-            </div>
-          </TinderCard>
-        ))):""}
-      </div>
-      <div className="buttons">
-      <button onClick={() => swipe("left")}>Swipe left!</button>
-        <button onClick={() => swipe("right")}>Swipe right!</button>
-      </div>
-      <div className="infoText">
-        {lastDirection ? (
-          lastDirection === "right" ? (
-            <h2>You have selected image {name}</h2>
-          ) : (
-            <h2>You have rejected image {name}</h2>
-          )
+      <div>
+        {name === "Five" ? (
+          <h1 style={{textAlign:"center",marginTop:"10rem"}}>{user.username}, you have rated all the images. Thank You!</h1>
         ) : (
-          <h2>Swipe a card or press a button to get started!</h2>
+          <div>
+            <div className="card_main">
+              {img
+                ? img.map((img) => (
+                    <TinderCard
+                      className="swipe"
+                      preventSwipe={["up", "down"]}
+                      key={img.name}
+                      onCardLeftScreen={(dir) => outOfFrame(img.name, dir)}
+                    >
+                      <div
+                        className="card"
+                        style={{
+                          backgroundImage: `url(${img.url})`,
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      >
+                        <h3>{img.name}</h3>
+                      </div>
+                    </TinderCard>
+                  ))
+                : ""}
+            </div>
+            <div className="buttons">
+              <button onClick={() => swipe("left")}>Swipe left!</button>
+              <button onClick={() => swipe("right")}>Swipe right!</button>
+            </div>
+            <div className="infoText">
+              {lastDirection ? (
+                lastDirection === "right" ? (
+                  <h2>
+                    {user.username}, you have selected image {name}
+                  </h2>
+                ) : (
+                  <h2>
+                    {user.username}, you have rejected image {name}
+                  </h2>
+                )
+              ) : (
+                <h2>Swipe a card or press a button to get started!</h2>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>

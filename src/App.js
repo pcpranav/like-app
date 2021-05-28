@@ -9,6 +9,7 @@ const Routing = () => {
   const history = useHistory();
   const user = JSON.parse(localStorage.getItem("user"));
 
+//set page according to login status
   useEffect(() => {
     if (user && user.auth===true) {
       history.push("/home")
