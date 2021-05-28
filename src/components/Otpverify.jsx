@@ -59,11 +59,11 @@ const Otpverify = ({ prevStep }) => {
 
       <div className="main">
         <div className="login-main">
-          <div className="banner">Like-App</div>
+          {/* <div className="banner">Like-App</div> */}
 
           <div className="login-comp">
             <div className="welcome">
-              <h1>Enter OTP</h1>
+              <h1>Enter otp</h1>
             </div>
             <div className="input-mobile1">
               <input
@@ -110,9 +110,10 @@ const Otpverify = ({ prevStep }) => {
           <div className="banner1">
             <h1>Hey, There</h1>
           </div>
+          <br/>
           <div className="info">
             <h5>
-              <strong>Like-App</strong> is a simple app to swipe some pictures
+              a simple website to swipe some pictures
               liking or disliking it along the way.
             </h5>
           </div>

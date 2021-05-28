@@ -99,8 +99,8 @@ const Home = () => {
                 : ""}
             </div>
             <div className="buttons">
-              <button onClick={() => swipe("left")}>Swipe left!</button>
-              <button onClick={() => swipe("right")}>Swipe right!</button>
+              <button onClick={() => swipe("left")}>Dislike</button>
+              <button onClick={() => swipe("right")}>Like</button>
             </div>
             <div className="infoText">
               {lastDirection ? (
