@@ -51,7 +51,7 @@ const Otpverify = ({ prevStep }) => {
       {val && (
         <Alert
           variant="danger"
-          style={{ position: "absolute", top: "0", right: "0" }}
+          style={{ position: "absolute", bottom: "0" }}
         >
           Invalid OTP.Please enter the OTP again.
         </Alert>

@@ -1,5 +1,6 @@
 .main {
   display: flex;
+  flex-wrap: wrap-reverse;
 }
 .banner {
   text-align: center;
@@ -136,4 +137,13 @@ input[type="password"] {
 }
 .nav button {
   flex: 20%;
+}
+
+@media (max-width: 800px) {
+  .main {
+    font-size: 10px;
+  }
+  .login-main .info-main{
+    flex:100%
+  }
 }

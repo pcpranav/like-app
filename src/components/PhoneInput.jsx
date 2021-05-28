@@ -34,7 +34,7 @@
         {val && (
           <Alert
             variant="danger"
-            style={{ position: "absolute", top: "0", right: "0" }}
+            style={{ position: "absolute", bottom: "0" }}
           >
             Invalid Input.Please check the inputs again.
           </Alert>
