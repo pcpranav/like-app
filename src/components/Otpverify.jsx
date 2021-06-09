@@ -11,7 +11,7 @@ const Otpverify = ({ prevStep }) => {
       "user",
       JSON.stringify({ auth: auth, username: username })
     );
-    if (auth === true) history.push("/home");
+    if (auth === true) history.replace("/home");
   }, [auth, history, username]);
   const [state, setState] = useState({
     num1: "",

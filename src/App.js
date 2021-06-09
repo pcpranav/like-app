@@ -15,6 +15,7 @@ const Routing = () => {
       history.push("/home")
     } else {
         history.push("/login");
+        localStorage.clear();
     }
   }, [user,history]);
   return (

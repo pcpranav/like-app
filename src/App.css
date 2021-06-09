@@ -147,9 +147,6 @@ input[type="password"] {
 }
 
 @media (max-width: 800px) {
-  .main {
-    font-size: 10px;
-  }
   .login-main .info-main{
     flex:100%
   }
